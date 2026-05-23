@@ -146,3 +146,101 @@ SELECT
 FROM project
 JOIN organization
 ON project.organization_id = organization.organization_id;
+
+-- ========================================
+-- Category Table
+-- ========================================
+CREATE TABLE category (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- ========================================
+-- Insert Sample Categories
+-- ========================================
+INSERT INTO category (name)
+VALUES
+('Community Development'),
+('Environmental Sustainability'),
+('Education'),
+('Volunteer Service'),
+('Public Safety');
+
+-- ========================================
+-- Project Category Junction Table
+-- ========================================
+CREATE TABLE project_category (
+    project_id INTEGER NOT NULL,
+    category_id INTEGER NOT NULL,
+
+    PRIMARY KEY (project_id, category_id),
+
+    CONSTRAINT fk_project
+        FOREIGN KEY (project_id)
+        REFERENCES project(project_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_category
+        FOREIGN KEY (category_id)
+        REFERENCES category(category_id)
+        ON DELETE CASCADE
+);
+
+-- ========================================
+-- Associate Projects with Categories
+-- ========================================
+
+INSERT INTO project_category (project_id, category_id)
+VALUES
+-- BrightFuture Builders Projects
+(1, 1),
+(1, 5),
+
+(2, 1),
+(2, 4),
+
+(3, 5),
+
+(4, 1),
+
+(5, 2),
+
+-- GreenHarvest Growers Projects
+(6, 2),
+(6, 3),
+
+(7, 2),
+
+(8, 3),
+
+(9, 3),
+(9, 2),
+
+(10, 2),
+
+-- UnityServe Volunteers Projects
+(11, 4),
+
+(12, 4),
+
+(13, 3),
+(13, 4),
+
+(14, 4),
+(14, 1),
+
+(15, 4);
+
+-- ========================================
+-- Verify Category Relationships
+-- ========================================
+
+SELECT
+    project.title AS project_title,
+    category.name AS category_name
+FROM project_category
+JOIN project
+ON project_category.project_id = project.project_id
+JOIN category
+ON project_category.category_id = category.category_id
+ORDER BY project.project_id;
