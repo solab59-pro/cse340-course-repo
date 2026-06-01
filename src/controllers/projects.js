@@ -21,6 +21,11 @@ import {
     getProjectDetails
 } from '../models/projects.js';
 
+import {
+    getCategoriesByProjectId
+} from '../models/categories.js';
+
+
 // Number of upcoming projects to display
 const NUMBER_OF_UPCOMING_PROJECTS = 5;
 
@@ -44,10 +49,12 @@ const showProjectDetailsPage = async (req, res) => {
     // Retrieve project details from database
     const project = await getProjectDetails(id);
 
+    const categories = await getCategoriesByProjectId(id);
+
     // Render the project details page
     res.render('project', {
         title: project.title,
-        project
+        project, categories
     });
 };
 
