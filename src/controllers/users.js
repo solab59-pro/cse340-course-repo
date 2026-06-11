@@ -66,4 +66,7 @@ const processLogout = async (req, res) => {
 };
 
 
-export { showUserRegistrationForm, processUserRegistrationForm,showLoginForm, processLoginForm, processLogout};
+
+export { showUserRegistrationForm, processUserRegistrationForm,showLoginForm, processLoginForm,
+     processLogout
+};
