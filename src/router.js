@@ -27,6 +27,14 @@ import {
 } from './controllers/categories.js';
 
 
+import {
+    showUserRegistrationForm,
+    processUserRegistrationForm
+} from './controllers/users.js';
+
+// import * as userController from './controllers/users.js'; THis style is just convenient when a controller exports multiple functions.
+
+
 const router = express.Router();
 
 router.get('/', showHomePage);
@@ -89,6 +97,9 @@ router.post(
     processEditCategoryForm
 );
 
+// User registration routes
+router.get('/register', showUserRegistrationForm);
+router.post('/register', processUserRegistrationForm);
 
 // error-handling routes
 router.get('/test-error', testErrorPage);
