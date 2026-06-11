@@ -29,7 +29,7 @@ import {
 
 import {
     showUserRegistrationForm,
-    processUserRegistrationForm
+    processUserRegistrationForm, showLoginForm, processLoginForm, processLogout
 } from './controllers/users.js';
 
 // import * as userController from './controllers/users.js'; THis style is just convenient when a controller exports multiple functions.
@@ -100,6 +100,11 @@ router.post(
 // User registration routes
 router.get('/register', showUserRegistrationForm);
 router.post('/register', processUserRegistrationForm);
+
+// User login routes
+router.get('/login', showLoginForm);
+router.post('/login', processLoginForm);
+router.get('/logout', processLogout);
 
 // error-handling routes
 router.get('/test-error', testErrorPage);
