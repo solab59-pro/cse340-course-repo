@@ -30,7 +30,7 @@ import {
 import {
     showUserRegistrationForm,
     processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, requireLogin, 
-    showDashboard, requireRole
+    showDashboard, requireRole, showUsersPage
 } from './controllers/users.js';
 
 // import * as userController from './controllers/users.js'; THis style is just convenient when a controller exports multiple functions.
@@ -112,6 +112,12 @@ router.get('/logout', processLogout);
 
 // Protected dashboard route
 router.get('/dashboard', requireLogin, showDashboard);
+
+router.get(
+    '/users',
+    requireRole('admin'),
+    showUsersPage
+);
 
 // error-handling routes
 router.get('/test-error', testErrorPage);
