@@ -16,7 +16,8 @@ import {organizationValidation} from './controllers/organizations.js';
 
 import {showEditOrganizationForm, processEditOrganizationForm } from './controllers/organizations.js';
 import {showNewProjectForm, processNewProjectForm, projectValidation,  showEditProjectForm,
-    processEditProjectForm} from './controllers/projects.js';
+    processEditProjectForm,  volunteerForProject, removeVolunteer} 
+    from './controllers/projects.js';
 
 import {
     showNewCategoryForm,
@@ -118,6 +119,11 @@ router.get(
     requireRole('admin'),
     showUsersPage
 );
+
+router.post('/project/:id/volunteer', requireLogin, volunteerForProject);
+router.post('/project/:id/unvolunteer', requireLogin, removeVolunteer);
+
+
 
 // error-handling routes
 router.get('/test-error', testErrorPage);

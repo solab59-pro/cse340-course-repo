@@ -1,24 +1,10 @@
-// // Import any needed model functions
-// import { getAllProjects } from '../models/projects.js';
 
-// // Define any controller functions
-// const showProjectsPage = async (req, res) => {
-//     const projects = await getAllProjects();
-//     const title = 'Service Projects';
-
-//     res.render('projects', { title, projects });
-// };  
-
-// // Export any controller functions
-// export { showProjectsPage };
-
-
-
-// New
 // Import needed model functions
 import {
     getUpcomingProjects,
-    getProjectDetails, 
+    getProjectDetails, addVolunteerToProject,
+    removeVolunteerFromProject,
+    getUserVolunteerProjects
 } from '../models/projects.js';
 
 import {
@@ -165,7 +151,30 @@ const processEditProjectForm = async (req, res) => {
     res.redirect(`/project/${projectId}`);
 };
 
+const volunteerForProject = async (req, res) => {
+    const userId = req.session.user.user_id;
+    const projectId = req.params.id;
+
+    await addVolunteerToProject(userId, projectId);
+
+    req.flash('success', 'You are now volunteering for this project!');
+    res.redirect(`/project/${projectId}`);
+};
+
+const removeVolunteer = async (req, res) => {
+    const userId = req.session.user.user_id;
+    const projectId = req.params.id;
+
+    await removeVolunteerFromProject(userId, projectId);
+
+    req.flash('success', 'You have been removed from this project.');
+    res.redirect(`/project/${projectId}`);
+};
+
+
+
 // Export controller functions
 export { showProjectsPage, showProjectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation,
-    processEditProjectForm, showEditProjectForm
+    processEditProjectForm, showEditProjectForm,  volunteerForProject,
+    removeVolunteer,
  };
